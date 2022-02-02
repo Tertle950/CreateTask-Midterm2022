@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 void arrayShuffle(char *array, size_t n);
+int rollDice(int amnt);
 
 int main(){
     // Initialize various important variables
     char NOTHING = '.';
     char DANGER = '!';
     char HEALING = '+';
-    int BOARD_LENGTH = 200;
+    int BOARD_LENGTH = 20;
 
     // Generate the game board
     char boardPieces[10] = {'.', '.', '!', '!', '.', '.', '+', '+', '.', '.'};
@@ -24,8 +25,16 @@ int main(){
         }
     }
 
+    /*
     for(int i = 0; i < BOARD_LENGTH; i++){
         printf("%c ",board[i]);
+    }
+    */
+
+    // Now for the actual game...
+    int playerLocation = 0;
+    for(int i = playerLocation + 1; i < (i+5>BOARD_LENGTH?BOARD_LENGTH:i+5); i++){
+        
     }
 
     return 0;
@@ -45,4 +54,20 @@ void arrayShuffle(char *array, size_t n){
           array[i] = l;
         }
     }
+}
+
+int rollDice(int amnt){
+    // Constrain
+    if(amnt < 1){amnt = 1;}
+    if(amnt > 3){amnt = 3;}
+    printf("Rolling %i dice...",amnt);
+    int returner = 0;
+    int roll = 0;
+
+    for(int i = 0; i < amnt; i++){
+        roll = (rand() % 3) + 1;
+        printf("%i, and ",roll);
+        returner += roll;
+    }
+    printf("done!\nYou rolled %i total.\n",returner);
 }
