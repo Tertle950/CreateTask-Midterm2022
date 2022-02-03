@@ -34,15 +34,18 @@ int main(){
     // Now for the actual game...
     int playerLocation = 0;
     int roll = 0;
+    int result = 0;
     while(playerLocation < BOARD_LENGTH){
         printf("@ ");
         for(int i = playerLocation + 1; i < (i+5>BOARD_LENGTH?BOARD_LENGTH:i+5); i++){
             printf("%c ",board[i]);
         }
         printf("\nRoll how many dice? (1-3): ");
-        scanf("%i",*roll);
-        rollDice(roll);
-        playerLocation+=roll;
+        scanf("%i",&roll);
+        result = rollDice(roll);
+        playerLocation+=result;
+
+
     }
     return 0;
 }
