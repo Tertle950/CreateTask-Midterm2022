@@ -2,13 +2,15 @@
 #include <stdlib.h>
 void arrayShuffle(char *array, size_t n);
 int rollDice(int amnt);
+void printRandomHurt();
+void printRandomHeal();
 
 int main(){
     // Initialize various important variables
     char NOTHING = '.';
     char DANGER = '!';
     char HEALING = '+';
-    int BOARD_LENGTH = 20;
+    int BOARD_LENGTH = 50;
 
     // Generate the game board
     char boardPieces[10] = {'.', '.', '!', '!', '.', '.', '+', '+', '.', '.'};
@@ -33,20 +35,33 @@ int main(){
 
     // Now for the actual game...
     int playerLocation = 0;
+    int playerHealth = 5;
     int roll = 0;
     int result = 0;
     while(playerLocation < BOARD_LENGTH){
-        printf("@ ");
-        for(int i = playerLocation + 1; i < (i+5>BOARD_LENGTH?BOARD_LENGTH:i+5); i++){
+        printf("You currently have %i health.\n@ ",playerHealth);
+        for(int i = playerLocation + 1; i < BOARD_LENGTH; i++){
             printf("%c ",board[i]);
         }
+
         printf("\nRoll how many dice? (1-3): ");
         scanf("%i",&roll);
         result = rollDice(roll);
         playerLocation+=result;
 
-
+        switch(board[playerLocation]){
+            case '.': break;
+            case '!':
+                playerHealth--;
+                printRandomHurt();
+                break;
+            case '+':
+                playerHealth++;
+                printRandomHeal();
+                break;
+        }
     }
+    printf("\nYou ended the game with %i health.\nCongrats! Now try for higher!",playerHealth);
     return 0;
 }
 
@@ -58,14 +73,15 @@ void arrayShuffle(char *array, size_t n){
         size_t i;
         for (i = 0; i < n - 1; i++) 
         {
-          size_t j = i + rand() / (RAND_MAX / (n - i) + 1);
-          char l = array[j];
-          array[j] = array[i];
-          array[i] = l;
+            size_t j = i + rand() / (RAND_MAX / (n - i) + 1);
+            char l = array[j];
+            array[j] = array[i];
+            array[i] = l;
         }
     }
 }
 
+// This, however, is NOT stolen code :)
 int rollDice(int amnt){
     // Constrain
     if(amnt < 1){amnt = 1;}
@@ -80,4 +96,33 @@ int rollDice(int amnt){
         returner += roll;
     }
     printf("done!\nYou rolled %i total.\n",returner);
+    return returner;
+}
+
+void printRandomHurt(){
+    switch(rand() % 2){
+        case 0:
+            printf("You stepped on a spike!\n");
+            break;
+        case 1:
+            printf("You tripped on an inconvenient gizmo!\n");
+            break;
+        case 2:
+            printf("You found a glass of milk! Expired milk!\n");
+            break;
+    }
+}
+
+void printRandomHeal(){
+    switch(rand() % 2){
+        case 0:
+            printf("You found a spare band-aid!\n");
+            break;
+        case 1:
+            printf("You found a glass of milk!\n");
+            break;
+        case 2:
+            printf("You accidentally swallowed a fairy!\n");
+            break;
+    }
 }
