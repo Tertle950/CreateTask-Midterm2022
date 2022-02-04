@@ -35,11 +35,14 @@ int main(){
 
     // Now for the actual game...
     int playerLocation = 0;
-    int playerHealth = 5;
+    int playerHealth = 2;
     int roll = 0;
     int result = 0;
     while(playerLocation < BOARD_LENGTH){
-        printf("You currently have %i health.\n@ ",playerHealth);
+        if(playerHealth == 0){
+            break;
+        }
+        printf("\nYou currently have %i health.\n\n@ ",playerHealth);
         for(int i = playerLocation + 1; i < BOARD_LENGTH; i++){
             printf("%c ",board[i]);
         }
@@ -61,7 +64,12 @@ int main(){
                 break;
         }
     }
-    printf("\nYou ended the game with %i health.\nCongrats! Now try for higher!",playerHealth);
+    printf("\nYou ended the game with %i health.\n",playerHealth);
+    if(playerHealth == 0){
+        printf("You didn't survive the Cavern.\n");
+    }else{
+        printf("Congratulations! You escaped the Cavern!\n");
+    }
     return 0;
 }
 
@@ -100,7 +108,7 @@ int rollDice(int amnt){
 }
 
 void printRandomHurt(){
-    switch(rand() % 2){
+    switch(rand() % 5){
         case 0:
             printf("You stepped on a spike!\n");
             break;
@@ -108,21 +116,33 @@ void printRandomHurt(){
             printf("You tripped on an inconvenient gizmo!\n");
             break;
         case 2:
-            printf("You found a glass of milk! Expired milk!\n");
+            printf("You drank a glass of milk! Expired milk!\n");
+            break;
+        case 3:
+            printf("You fell, and you couldn't get up!\n");
+            break;
+        case 4:
+            printf("You stepped on broken glass!\n");
             break;
     }
 }
 
 void printRandomHeal(){
-    switch(rand() % 2){
+    switch(rand() % 5){
         case 0:
             printf("You found a spare band-aid!\n");
             break;
         case 1:
-            printf("You found a glass of milk!\n");
+            printf("You drank a glass of milk!\n");
             break;
         case 2:
             printf("You accidentally swallowed a fairy!\n");
+            break;
+        case 3:
+            printf("You microwaved leftover chicken tikka!\n");
+            break;
+        case 4:
+            printf("Your mother brought you dinner!\n");
             break;
     }
 }
