@@ -12,6 +12,11 @@ int main(){
     char HEALING = '+';
     int BOARD_LENGTH = 50;
 
+    // Info-dump!
+    printf("   Welcome to the Caverns. Try to escape with as high a health as possible.\n\n");
+    printf("You can roll 1, 2, or 3 dice. Dots are empty, exclamation marks remove 1 health,\n");
+    printf("and plus signs add 1 health. Good luck! \n\n");
+
     // Generate the game board
     char boardPieces[10] = {'.', '.', '!', '!', '.', '.', '+', '+', '.', '.'};
     arrayShuffle(boardPieces, 10);
@@ -64,11 +69,10 @@ int main(){
                 break;
         }
     }
-    printf("\nYou ended the game with %i health.\n",playerHealth);
     if(playerHealth == 0){
-        printf("You didn't survive the Cavern.\n");
+        printf("\nYou didn't survive the Cavern...\n");
     }else{
-        printf("Congratulations! You escaped the Cavern!\n");
+        printf("\nCongratulations! You escaped the Cavern with %i health!\n",playerHealth);
     }
     return 0;
 }
